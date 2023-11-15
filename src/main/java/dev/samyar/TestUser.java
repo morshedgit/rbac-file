@@ -1,14 +1,13 @@
 package dev.samyar;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "test_user")
 public class TestUser {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "username")
@@ -17,14 +16,10 @@ public class TestUser {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private UserRole role; // Assuming you have a UserRole entity
 
-    // Constructors
-    public TestUser() {
-    }
-
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -49,13 +44,13 @@ public class TestUser {
         this.password = password;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
-
-    // toString, hashCode, equals methods as needed
+    
+    
 }
